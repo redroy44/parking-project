@@ -49,7 +49,7 @@ def split_dirs(dir_list):
 def create_dirs(dir_list):
     symlinks_list = ['data/symlinks/train', 'data/symlinks/validation', 'data/symlinks/test']
     if not os.path.exists('data/symlinks'):
-        os.mkdir(d)
+        os.mkdir('data/symlinks')
     for d in symlinks_list:
         if not os.path.exists(d):
             os.mkdir(d)

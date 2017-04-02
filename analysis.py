@@ -15,9 +15,8 @@ img_width, img_height = 50, 50
 train_data_dir = 'data/symlinks/train'
 validation_data_dir = 'data/symlinks/validation'
 test_data_dir = 'data/symlinks/test'
-nb_train_samples = 87874
-nb_validation_samples = 72289
-nb_epoch = 1
+nb_epoch = 20
+batch_size=128
 
 # this is the augmentation configuration we will use for training
 train_datagen = ImageDataGenerator(
@@ -36,36 +35,36 @@ test_datagen = ImageDataGenerator(
 train_generator = train_datagen.flow_from_directory(
         train_data_dir,
         target_size=(img_width, img_height),
-        batch_size=64,
+        batch_size=batch_size,
         class_mode='binary',
         follow_links=True)
 
 validation_generator = test_datagen.flow_from_directory(
         validation_data_dir,
         target_size=(img_width, img_height),
-        batch_size=64,
+        batch_size=batch_size,
         class_mode='binary',
         follow_links=True)
 
 test_generator = test_datagen.flow_from_directory(
         test_data_dir,
         target_size=(img_width, img_height),
-        batch_size=64,
+        batch_size=batch_size,
         shuffle=False,
         class_mode='binary',
         follow_links=True)
 
 def get_model():
     model = Sequential()
-    model.add(Convolution2D(32, 3, 3, input_shape=(img_width, img_height, 3)))
+    model.add(Convolution2D(32, (3, 3), input_shape=(img_width, img_height, 3)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     
-    model.add(Convolution2D(32, 3, 3))
+    model.add(Convolution2D(32, (3, 3)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     
-    model.add(Convolution2D(64, 3, 3))
+    model.add(Convolution2D(64, (3, 3)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     
@@ -101,16 +100,16 @@ model.compile(loss='binary_crossentropy',
 
 model.fit_generator(
         train_generator,
-        samples_per_epoch=train_generator.nb_sample,
-        nb_epoch=nb_epoch,
+        steps_per_epoch=train_generator.samples/batch_size,
+        epochs=nb_epoch,
         validation_data=validation_generator,
         verbose=1,
-        nb_val_samples=validation_generator.nb_sample,
+        validation_steps=validation_generator.samples/batch_size,
         callbacks=[history])
 
 test_loss, test_acc = model.evaluate_generator(
          test_generator,
-         val_samples=test_generator.nb_sample)
+         steps=test_generator.samples/batch_size)
 
 print("test_loss: %.4f - test_acc: %.4f"%(test_loss, test_acc))
 
