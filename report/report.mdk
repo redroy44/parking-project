@@ -1,0 +1,50 @@
+Title         : Klasyfikator miejsc parkingowych w oparciu o głębokie sieci neuronowe.
+Title Note    : &date;
+Author        : Piotr Bandurski
+Email         : bandurski.piotr@gmail.com
+
+Bibliography  : references.bib
+Package       : polski
+Package       : [polish]babel
+
+name-contents : Spis Treści
+name-references: Bibliografia
+
+[TITLE]
+
+~ Begin SidePanel
+
+[TOC]
+~ End SidePanel
+
+~ Begin MainPanel
+
+# Wstęp
+# Przegląd obecnych rozwiązań
+# Wybrana metoda klasyfikacji
+## CNN
+## Dropout
+## Optimizer
+## Loss Function
+# Opis zbioru danych
+## Opis ujęć i metadane
+## Podział zbioru danych
+# Implementacja
+## Wybrane narzędzia
+## Architektura sieci neuronowej
+## Wstępne przetwarzanie obrazu
+# Wyniki
+## Wpływ warunków pogodowych
+## Uogólnienie sieci na inne parkingi
+# Wnioski
+
+
+
+[BIB]
+
+&pagebreak;
+
+# An appendix { @h1:"A" }
+
+
+~ End MainPanel
