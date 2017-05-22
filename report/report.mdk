@@ -8,32 +8,87 @@ Package       : polski
 Package       : [polish]babel
 Locale        : polish
 
-
 name-contents : Spis Treści
 name-references: Bibliografia
 
 [TITLE]
 
 ~ Begin SidePanel
-
 [TOC]
 ~ End SidePanel
 
 ~ Begin MainPanel
 
 # Wstęp
+
+Problem dostępu do miejsc parkingowych w centrach dużych miast jest niewątpliwie jednym z większych problemów z jakimi muszą potykać się władze współczesnych metropolii. Przy roznące liczbie mieszkańców miast wzrasta też liczba samochodów i kierowców, którzy chcę zaparkować swoje auta. Ze względu na ograniczoną liczę miejsc parkingowych kierowcy tracą często po kilkanaście minut w poszukiwaniu miejsca, co powoduje nie tylko zwiększony ruch samochodów, ale też zanieczyszczenie powietrza i wzrost niezadowolenia kierowców, które z kole może negatywnie wpływać na liczbę stłuczek i wypadków.
+
+Jednych z rozwiązań, które mają na celu ulatwić życie kierowcom są systemy monitorujące wolne miejsca na parkingach miejskich. Są one w czasie rzeczywistym monitorować liczbę miejsc parkingowych które są wolne oraz wyświetlać takie informacje na tablicach informacyjnych. Niestety bardzo często takie rozwiązania są dosyć drogie, a montaż systemu monitorowania wymaga ingerencji w nawierzchnię parkingu czy zamontowanie barierek na wjazdach i wyjazdach. 
+
 # Przegląd obecnych rozwiązań
+
+Obecne rozwiązania w monitorowaniu miejsc parkingowych można zaliczyć do trzech kategorii: monitorowanie pojazdów na wjazdach/wyjazdach, monitorowanie na podstawie czujników oraz monitorowanie pojazdów za pomocą systemów wizyjnych. W niniejszej pracy skupiliśmy się na ostatnim typie rozwiązań. Ich niewątpliwą zaletą są stosunkowo niskie koszty instalacji oraz brak konieczności budowy infrastruktury komunikacyjnej jak w przypadku systemów bazujących na sieci czujników. Ponadto system wizyjny można włączyć w obecny system monitorowania parkingu.
+
+W ciągu ostatnich lat pojawiło sie wiele publikacji badających problem monitorowania miejsc parkingowych, jednak większość z nich bazowała na starszych algorytmach analizy obrazu, które nie były oparte na głębokich sieciach neuronowych.
+
+W niniejszej pracy autor podjął się trudu zbadania problemu za pomocą głębokich sieci neuronowych, które okazały się zarówno skuteczne przy rozpoznanianiu oraz wystarczająco elastyczne, by dostosować się
+do zmiennych warunków pogodowych.
+
+W kolejnej części pracy autor opisze pokrótce splotowe sieci neuronowe, które stoją za odrodzeniem sieci neurowowych w uczeniu maszynowym. Następnie opisze zbiór danych użyty do wytrenowania sieci neuronowej oraz opisze szczegóły implementacji i wyniki, które zostały otrzymane.
+
 # Wybrana metoda klasyfikacji
+
+blebleble
+
+![ilsvrc]
+
+blablabla
+
+[ilsvrc]: images/ilsvrc.png "ilsvrc" { width:auto; max-width:90% }
+
 ## Splotowe Sieci Neuronowe
-## Algorytm Dropout
-## Algorytm optymalizacji
+
+Architektura splotowych sieci neuronowych w ogólnym ujęcie przypomina budowę tradycyjnych pełnych sieci neuronowych. Tak jak one, składają się z warstw, a ich celem jest znalezienie minimum funkcji kosztu.  Różnicą jest tutaj założenie, że na wejsciu sieci podawany jest obraz. To założenie pozwala na zastosowanie pewnych rozwiązań które pozwalają na szybszą optymalizację, co z kolei pozwala na zastosowania głębszych sieci bez ryzyka ich przetrenowania.
+
+Podstawowym elementem splotowej sieci neuronowej jest warstwa splotowa, warstwa agregująca oraz warstwa pełna. Pierwsza warstwa, jak nazwa wskazuje wykorzystuje funkcję splotu do obliczenia cech opisujących fragment obrazu. Jest ona lokalnie połączone w przeciwieństwie do warstw z tradycyjnych sieci.
+Zestaw filtrów jest splatany z fragmentami obrazu, czego wynikiem jest mapa aktywacji, która określa które fragmenty obrazu najbardziej pasują do filtrów. Intuicyjnie filtry w drodze optymalizacji sieci uczą się optymalnie reprezentować cechy obrazu, które będą wykorzystywane do klasyfikacji.
+
+
+
+Warstwa agregująca (max-pooling) wykorzystywana jest przede wszystkim do redukcji liczby parametrów przez wybranie wartości maksymalnej na określonym obszarze obrazu. 
+
+W wyższych warstwach sieci wykorzystuje się znane w pełni połączone warstwy, kóre są wykorzystywane do redukcji liczby parametrów i finalnej optymalizacji/obliczenie wartości funkcji kosztu.
+
+Jedną z bardziej charakterystycznych architektur splotowej sieci neuronowej jest kilkukrotnie powtórzona sekwencja warstw splotowej i agregującej, która jest połączona z kilkoma warstwami pełnymi.
+
+## Funkcja aktywacji
+
+Wybraną funkcją aktywacji sieci jest funkcja ReLu, czyli funkcja liniowa ograniczona zerem. Jest ona określona następującym wzorem:
+
+wzór
+
+Funkcja aktywacji jest jedną z najczęściej stosowanych funkcji ze względu na bardzo prosto określoną pochodną:
+
+pochodna
+
+Negatywną cechą tej funkcji aktywacji jest natomiast zjawisko zanikających gradientów. Zjawisku temu można jednak w dużym stopniu zapobiec uważnie wybierając wartości początkowe parametrów sieci neuronowej.
+
 ## Funkcja kosztu
+softmax - interpretacja jako prawdopodobieństwo. Łatwo można określić jak bardzo sieć jest pewna swojej predykcji.
+
+## Algorytm optymalizacji
+
+Adam - podobny do RMSProp
+
+## Algorytm Dropout
+
+Algorytm regularyzacji parametrów sieci neuronowej zapobiega przetrenowaniu.
 # Opis zbioru danych
 ## Opis ujęć i metadane
 ## Podział zbioru danych
 # Implementacja
 ## Wybrane narzędzia
-## Architektura sieci neuronowej
+## Wybrana architektura sieci neuronowej
 ## Wstępne przetwarzanie obrazu
 # Wyniki
 ## Wpływ warunków pogodowych
