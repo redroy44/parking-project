@@ -8,8 +8,9 @@ Package       : polski
 Package       : [polish]babel
 Locale        : polish
 
-name-contents : Spis Treści
+name-contents  : Spis Treści
 name-references: Bibliografia
+name-figure    : Rysunek
 
 [TITLE]
 
@@ -40,8 +41,9 @@ W kolejnej części pracy autor opisze pokrótce splotowe sieci neuronowe, któr
 
 blebleble
 
+~ Figure { #fig-ilsvrc; caption: "Top-5 błędu klasyfikacji zbioru ImageNet." }
 ![ilsvrc]
-
+~
 blablabla
 
 [ilsvrc]: images/ilsvrc.png "ilsvrc" { width:auto; max-width:90% }
@@ -65,11 +67,19 @@ Jedną z bardziej charakterystycznych architektur splotowej sieci neuronowej jes
 
 Wybraną funkcją aktywacji sieci jest funkcja ReLu, czyli funkcja liniowa ograniczona zerem. Jest ona określona następującym wzorem:
 
-wzór
+~ Math { #eq-relu; caption:"Wzór funkcji ReLU" }
+f(x) = \max(0, x)
+~
 
 Funkcja aktywacji jest jedną z najczęściej stosowanych funkcji ze względu na bardzo prosto określoną pochodną:
 
-pochodna
+~ Math { #eq-relu; caption:"Wzór pochodnej funkcji ReLU" }
+f'(x) = 
+\begin{cases}
+0, \quad x \leqslant 0 \\
+1, \quad x > 0
+\end{cases}
+~
 
 Negatywną cechą tej funkcji aktywacji jest natomiast zjawisko zanikających gradientów. Zjawisku temu można jednak w dużym stopniu zapobiec uważnie wybierając wartości początkowe parametrów sieci neuronowej.
 
@@ -83,14 +93,78 @@ Adam - podobny do RMSProp
 ## Algorytm Dropout
 
 Algorytm regularyzacji parametrów sieci neuronowej zapobiega przetrenowaniu.
+
 # Opis zbioru danych
+
+Wybranym zbiorem danych jest zbiór PKLot [@PKLot] przygotowany przez Uniwersytet Federalny w Paranie w Brazylii . Zbiór ten zawiera 12417 zdjęć parkingu Uniwersytecie w Paranie (UFPR) oraz parkingu Katolickiego Uniwersytetu w Paranie (PUCPR). Zdjęcia zostały zebrane w różnych warunkach pogodowych (słonecznie, zachmurzenie, deszcz) na przestrzeni 30 dni; zdjęcia były robione co 5 minut.
+Zdjecie [#fig-snapshot] pokazuje obraz przykładowe zdjęcie z kamery
+
+~ Figure { #fig-snapshot; caption: "Zdjęcie z kamery, parking PUCPR." }
+![snapshot]
+~
+
+Zbiór został podzielony na 3 podzbiory reprezentujące 2 parkingi i 2 różne ujęcia dla parkingu UFPR:
+
+* UFPR04 - 28 miejsc parkingowych
+* UFPR05 - 45 miejsc parkingowych
+* PUCPR - 100 miejsc parkingowych
+
 ## Opis ujęć i metadane
+
+Do każdego zdjęcie został dołączony plik xml z metadanymi opisującymi aktualny stan parkingu. Każde miejsce parkingowe jest opisane za pomocą ID, współrzędnych na obrazie oraz obecnym stanem (wolne lub zajęte). Przykładowy opis jednego z miejsc parkingowych zamieszczony jest poniżej.
+
+```
+<space id="1" occupied="1">
+  <rotatedRect>
+    <center x="300" y="207" />
+    <size w="55" h="32" />
+    <angle d="-74" />
+  </rotatedRect>
+  <contour>
+    <point x="278" y="230" />
+    <point x="290" y="186" />
+    <point x="324" y="185" />
+    <point x="308" y="230" />
+  </contour>
+</space>
+```
+~ Figure { #fig-snapshot_lot; caption: "Zdjęcie z kamery z naniesionymi metadanymi." }
+![snapshot_lot]
+~
+
+
+[snapshot]: images/snapshot.png "snapshot" { width:auto; max-width:90% }
+
+[snapshot_lot]: images/snapshot_lot.png "snapshot_lot" { width:auto; max-width:90% }
+
+
 ## Podział zbioru danych
+
+Zbiór danych jest bardzo dobrze zrównoważony, co pozwoliło na uniknięcie problemów płynących z niezbalansowanych klas.
+
+Zbiór danych został podzielony na trzy części:
+
+* zbiór treningowy - 50% próbek - 325298
+* zbiór walidacyjny - 30% próbek - 219720
+* zbiór testowy - 20% próbek - 150833
+
+W sumie 695851
+
+Zbiór danych
+
 # Implementacja
 ## Wybrane narzędzia
 ## Wybrana architektura sieci neuronowej
 ## Wstępne przetwarzanie obrazu
 # Wyniki
+
+~ Figure { #fig-classified; caption: "Zdjęcie z kamery z predykcjami z klasyfikatora." }
+![classified]
+~
+
+
+[classified]: images/classified.png "classified" { width:auto; max-width:90% }
+
 ## Wpływ warunków pogodowych
 ## Uogólnienie sieci na inne parkingi
 # Wnioski
