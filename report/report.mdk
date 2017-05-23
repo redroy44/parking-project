@@ -99,6 +99,7 @@ Jego zasadą działania jest aktywacja neuronów z pewnym prawdopodobieństwem $
 ![dropout]
 ~
 
+
 Warto dodać, że podczas predykcji prawdopodobieństwo ustala się na wartość $1$. Można ten fakt zinterpretować jako uśrednienie predykcji zespołu (ensemble) podsieci neuronowych.
 
 [dropout]: images/dropout.jpeg "dropout" { width:auto; max-width:90% }
@@ -106,7 +107,7 @@ Warto dodać, że podczas predykcji prawdopodobieństwo ustala się na wartość
 # Opis zbioru danych
 
 Wybranym zbiorem danych jest zbiór PKLot [@PKLot] przygotowany przez Uniwersytet Federalny w Paranie w Brazylii . Zbiór ten zawiera 12417 zdjęć parkingu Uniwersytecie w Paranie (UFPR) oraz parkingu Katolickiego Uniwersytetu w Paranie (PUCPR). Zdjęcia zostały zebrane w różnych warunkach pogodowych (słonecznie, zachmurzenie, deszcz) na przestrzeni 30 dni; zdjęcia były robione co 5 minut.
-Zdjecie [#fig-snapshot] pokazuje obraz przykładowe zdjęcie z kamery
+Rysunek [#fig-snapshot]. pokazuje przykładowe zdjęcie z kamery.
 
 ~ Figure { #fig-snapshot; caption: "Zdjęcie z kamery, parking PUCPR." }
 ![snapshot]
@@ -141,8 +142,7 @@ Do każdego zdjęcie został dołączony plik xml z metadanymi opisującymi aktu
 ![snapshot_lot]
 ~
 
-
-
+Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami poszczególnych miejsc parkingowych. Można zauważyć, że niektóre z nich się nakładają, co więcej, kształt samochodu zależny jest od perspektywy obrazu z kamery. Sieć neuronowa musiała się dostosować do tego faktu.
 
 [snapshot]: images/snapshot.png "snapshot" { width:auto; max-width:90% }
 
@@ -164,11 +164,31 @@ W sumie 695851
 Zbiór danych
 
 # Implementacja
+
+W poniższej sekcji zostaną opisane szczegóły implementacji sieci neuronowej, która posłużyła do klasyfikacji miejsc parkingowych.
 ## Wybrane narzędzia
+
+Sieć neuronowa została zaimplementowana w języku programowania Python, który jest jednym z najpopularniejszych języków stosowanych w uczeniu maszynowym. Żeby przyspieszyć proces uczenia sieci neuronowej autor zastosował bibliotekę TensorFlow [@TensorFlow], która umożliwia łatwe przeniesienie obliczeń z CPU na GPU, co pozwala na kilkukrotne przyspieszenie trenowania sieci. Przy implementacji wykorzystano również bibliotekę Keras [@Keras], która umożliwia wysokopoziomowe tworzenie głębokich sieci neuronowych. Do przetwarzania obrazu wykorzystano natomiast popularną bibliotekę OpenCV [@opencv].
+
+
 ## Wybrana architektura sieci neuronowej
+
+
 ## Wstępne przetwarzanie obrazu
 
-Centrowanie i normalizacja pikseli
+Zanim obrazy miejsc parkingowych zostały przesłane do sieci neuronowej, zostały one wstępnie przetworzone. Najpierw od wartości pikseli została odjęta średnia wartość ich jasności w każdym kanale (RGB). Proces ten nazywany jest centrowaniem.
+
+Następnie wartości pikseli zostały znormalizowane, tak by jasność pikseli była tego samego rzędu. Efekt ten został osiągnięty przez podzielenie każdego piksela przez wartość odchylenia standardowego w całym obrazie.
+
+## Powiększenie zbioru testującego
+
+Jednym z zabiegów stosowanych w rozpownawaniu obrazów jest powiększanie zbioru testowego przez wygenerowanie sztucznych obrazów. Jest to możliwe na przykład za pomocą:
+
+* lustrzanego odbicia obrazu
+* zaszumienia obrazu
+* powiększenia i przycięcia obrazu
+
+zabieg ten powoduje znaczące powiększenie zbioru testowego co pozwala na lepsze wytrenowanie sieci neuronowej.
 
 # Wyniki
 
