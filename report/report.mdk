@@ -88,11 +88,20 @@ softmax - interpretacja jako prawdopodobieństwo. Łatwo można określić jak b
 
 ## Algorytm optymalizacji
 
-Adam - podobny do RMSProp
+Wybranym algorytmem optymalizacji parametrów sieci jest algorytm Adam [@Adam]. Jest on obecnie rekomendowanym algorytmem przy uczeniu głębokich sieci neuronowych. Jego największą zaletą jest szybsze tempo optymalizacji w porównaniu do klasycznego algorytmu gradientu stochastycznego z momentem.
 
 ## Algorytm Dropout
 
-Algorytm regularyzacji parametrów sieci neuronowej zapobiega przetrenowaniu.
+Algorytm Dropout [@Dropout] jest wysoce efektywnym algorytmem zapobiegającym przetrenowaniu sieci.
+Jego zasadą działania jest aktywacja neuronów z pewnym prawdopodobieństwem $p$.
+
+~ Figure { #fig-dropout; caption: "Porównanie standardowej sieci oraz sieci z zastosowaniem algorytmu dropout." }
+![dropout]
+~
+
+Warto dodać, że podczas predykcji prawdopodobieństwo ustala się na wartość $1$. Można ten fakt zinterpretować jako uśrednienie predykcji zespołu (ensemble) podsieci neuronowych.
+
+[dropout]: images/dropout.jpeg "dropout" { width:auto; max-width:90% }
 
 # Opis zbioru danych
 
@@ -133,6 +142,8 @@ Do każdego zdjęcie został dołączony plik xml z metadanymi opisującymi aktu
 ~
 
 
+
+
 [snapshot]: images/snapshot.png "snapshot" { width:auto; max-width:90% }
 
 [snapshot_lot]: images/snapshot_lot.png "snapshot_lot" { width:auto; max-width:90% }
@@ -156,6 +167,9 @@ Zbiór danych
 ## Wybrane narzędzia
 ## Wybrana architektura sieci neuronowej
 ## Wstępne przetwarzanie obrazu
+
+Centrowanie i normalizacja pikseli
+
 # Wyniki
 
 ~ Figure { #fig-classified; caption: "Zdjęcie z kamery z predykcjami z klasyfikatora." }
@@ -169,11 +183,11 @@ Zbiór danych
 ## Uogólnienie sieci na inne parkingi
 # Wnioski
 
+
+
 [BIB]
 
 &pagebreak;
-
-# An appendix { @h1:"A" }
 
 
 ~ End MainPanel
