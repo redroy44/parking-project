@@ -204,7 +204,13 @@ zabieg ten powoduje znaczące powiększenie zbioru testowego co pozwala na lepsz
 [classified]: images/classified.png "classified" { width:auto; max-width:90% }
 
 ## Wpływ warunków pogodowych
+
+Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogodowe. Mogą one wpływać na oświetlenie samochodów rzucając cień lub powodując odbicia słoneczne, które utrudniają jednoznaczne sklasfikowanie danego obrazu jako wolne lub zajęte miejsce parkingowe. Żeby sprawdzić zdolność sieci do dostosowania się do zmiennych warunków pogodowych, wybrano 3 podzbiory dla różnych warunków pogodowych (słonecznie, deszczowo, zachmurzenie). Klasyfikator wybrano na kombinacji 2 zbiorów i przetestowano na zbiorze trzecim. Poniżej przedstawiono macierz skuteczności klasyfikatora.
+
 ## Uogólnienie sieci na inne parkingi
+
+Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. chcemy żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystaliśmy z 3 podzbiorów parkingów, UFPR4, UFPR5 i PUCPR. Dwa podzbiory zostały wykorzystane do treningu, trzeci podzbiów był zbiorem testowym. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
+
 # Wnioski
 
 Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc pparkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,5%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
