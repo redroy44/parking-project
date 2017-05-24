@@ -41,7 +41,7 @@ W kolejnej części pracy autor opisze pokrótce splotowe sieci neuronowe, któr
 
 Dotychczasowe próby rozwiązania problemu klasyfikacji miejsc parkingowych oparte były na klasycznych algorytmach użuwanych w analizie obrazów. Bazowały one na ręcznie budowanych cechach, które opisywały dany obraz. Cechy te były podawane na wejście klasyfikatora, np. SVM.
 
-Rewolucją, którą przyniósł rok 2012 było zastosowanie splotowych sieci neuronowych do rozpoznawania obrazów. Okazały się one bardzo skuteczne w tego typu problemach, co jeszcze bardziej krystalicznie pokazuje rysunek [#fig-ilsvrc]. Rysunek ten prezentuje metrykę Top-5 błędu klasyfikacji dla zbioru ImageNet, w ktorym należy poprawnie sklasyfikować obraz należący do jednej z 1000 klas. Znaczące obniżenie błędu klasyfikacji można zaobserwować w roku 2012 kiedy splotowe sieci neuronowe zostały wykorzystane do rozwiązania tego problemu pierwszy raz. W kolejnych latach wynik ten jeszcze się poprawiał, a w 2015 roku przekroczył wynik osiągnięty przez człowieka.
+Rewolucją, którą przyniósł rok 2012 było zastosowanie splotowych sieci neuronowych do rozpoznawania obrazów. Okazały się one bardzo skuteczne w tego typu problemach, co jeszcze bardziej krystalicznie pokazuje rysunek [#fig-ilsvrc]. Rysunek ten prezentuje metrykę Top-5 błędu klasyfikacji dla zbioru ImageNet, w ktorym należy poprawnie sklasyfikować obraz należący do jednej z 1000 klas. Znaczące obniżenie błędu klasyfikacji można zaobserwować w roku 2012 kiedy splotowe sieci neuronowe zostały wykorzystane do rozwiązania tego problemu pierwszy raz [@AlexNet]. W kolejnych latach wynik ten jeszcze się poprawiał, a w 2015 roku przekroczył wynik osiągnięty przez człowieka.
 
 ~ Figure { #fig-ilsvrc; caption: "Top-5 błędu klasyfikacji zbioru ImageNet." }
 ![ilsvrc]
@@ -207,7 +207,7 @@ zabieg ten powoduje znaczące powiększenie zbioru testowego co pozwala na lepsz
 ## Uogólnienie sieci na inne parkingi
 # Wnioski
 
-
+Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc pparkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,5%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
 
 [BIB]
 
