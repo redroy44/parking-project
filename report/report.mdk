@@ -154,17 +154,23 @@ Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami p
 
 ## Podział zbioru danych
 
-Zbiór danych jest bardzo dobrze zrównoważony, co pozwoliło na uniknięcie problemów płynących z niezbalansowanych klas.
+Ważnym udogodnieniem w zbiorze danych jest dostarczenie wraz z całymi zdjęciami z kamery, już wyekstrahowanych fragmentów miejsc parkingowych, które mogą być przesłana bezpośrednio po sieci (po zmianie rozmiaru, tak by wszystkie próbki miały ten sam rozmiar). Przykładowe próbki prezentuje rysunek [#fig-lot].
 
-Zbiór danych został podzielony na trzy części:
+~ Figure { #fig-lot; caption: "Przykładowe próbki prezentujące wolne i zajęte miejsca parkingowe." }
+![lot]
+  ~
 
-* zbiór treningowy - 50% próbek - 325298
-* zbiór walidacyjny - 30% próbek - 219720
-* zbiór testowy - 20% próbek - 150833
+Zbiór danych jest bardzo dobrze zrównoważony tzn. próbek wolnych miejsc jest mniej więcej tyle samo co próbek miejsc zajętych, co pozwoliło na uniknięcie problemów płynących z posiadania niezbalansowanych klas.
 
-W sumie 695851
+Przed przeprowadzenie procesu treningu zbiór danych został podzielony na trzy części:
 
-Zbiór danych
+* zbiór treningowy - 50% próbek - 325298 próbek
+* zbiór walidacyjny - 30% próbek - 219720 próbek
+* zbiór testowy - 20% próbek - 150833 próbek
+
+W sumie zbiór ma 695851 próbek miejsc parkingowych. Warto zaznaczyć, że zbiór został podzielony wg dni, a nie pojedynczych zdjęć. Jest to ważne, żeby uniknąć sytuacji w której próbki tego samego samochodu z dwóch zdjęć trafiają do różnych zbiorów. 
+
+[lot]: images/snapshot_lot.png "lot" { width:auto; max-width:90% }
 
 # Implementacja
 
@@ -176,7 +182,7 @@ Sieć neuronowa została zaimplementowana w języku programowania Python, który
 
 ## Wybrana architektura sieci neuronowej
 
-
+Zaimplementowana sieć neuronowa ma stosunkowo prostą architekturę.
 
 ## Wstępne przetwarzanie obrazu
 
@@ -209,11 +215,11 @@ Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogo
 
 ## Uogólnienie sieci na inne parkingi
 
-Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. chcemy żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystaliśmy z 3 podzbiorów parkingów, UFPR4, UFPR5 i PUCPR. Dwa podzbiory zostały wykorzystane do treningu, trzeci podzbiów był zbiorem testowym. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
+Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. chcemy żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystaliśmy z 3 podzbiorów parkingów, UFPR04, UFPR05 i PUCPR. Dwa podzbiory zostały wykorzystane do treningu, trzeci podzbiów był zbiorem testowym. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
 
 # Wnioski
 
-Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc pparkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,5%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
+Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc parkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,5\%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
 
 [BIB]
 
