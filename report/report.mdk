@@ -68,7 +68,7 @@ Jedną z bardziej charakterystycznych architektur splotowej sieci neuronowej jes
 
 ## Funkcja aktywacji
 
-Wybraną funkcją aktywacji sieci jest funkcja ReLu, czyli funkcja liniowa ograniczona zerem. Jest ona określona następującym wzorem:
+Wybraną funkcją aktywacji sieci jest funkcja ReLU, czyli funkcja liniowa ograniczona zerem. Jest ona określona następującym wzorem:
 
 ~ Math { #eq-relu; caption:"Wzór funkcji ReLU" }
 f(x) = \max(0, x)
@@ -86,12 +86,21 @@ f'(x) =
 
 Negatywną cechą tej funkcji aktywacji jest natomiast zjawisko zanikających gradientów. Zjawisku temu można jednak w dużym stopniu zapobiec uważnie wybierając wartości początkowe parametrów sieci neuronowej.
 
-## Funkcja kosztu
-softmax - interpretacja jako prawdopodobieństwo. Łatwo można określić jak bardzo sieć jest pewna swojej predykcji.
+## Klasyfikator i funkcja kosztu
+
+Wybranym klasyfikatorem odpowiedzialnym za predykcję klas w sieci neuronowej jest klasyfikator softmax, który stosuje entropię wzajemną jako funkcję kosztu.
+
+~ Math { #eq-relu; caption:"Wzór na funkcję kosztu." }
+  2+2=4
+~
+Klasyfikator softmax stosuje się najczęściej w przypadku klasyfikacji wielorakiej, ponieważ softmax zwraca wektor ocen dla poszczególnych klas. Ciekawą właściwością jest jego interpretacja probabilistyczna. Ponieważ wartości wektora ocen zwracanego przez klasyfikator sumiją się do 1, można interpretować jako prawdopodobieństwa, że dana próbka należy do danej klasy.
+Co z kolei ułatwia zaobserwowanie jak bardzo pewny siebie jest klasyfikator podczas predykcji klas.
+
+W przypadku klasyfikacji binarnej, zwracany będzie dwuwymiarowy wektor o wartościach $[ p \quad 1-p ]$, gdzie $p$ określa prawdopodobieństwo, przynależności do pierwszej klasy. W przypadku kiedy $p \approx 0,5$ można ocenić że klasyfikator nie jest pewny, do której klasy należy dana próbka lub że klasyfikator jest źle wytrenowany.
 
 ## Algorytm optymalizacji
 
-Wybranym algorytmem optymalizacji parametrów sieci jest algorytm Adam [@Adam]. Jest on obecnie rekomendowanym algorytmem przy uczeniu głębokich sieci neuronowych. Jego największą zaletą jest szybsze tempo optymalizacji w porównaniu do klasycznego algorytmu gradientu stochastycznego z momentem.
+Wybranym algorytmem optymalizacji parametrów sieci jest algorytm Adam [@Adam]. Jest on obecnie rekomendowanym algorytmem przy uczeniu głębokich sieci neuronowych. Jego największą zaletą jest szybsze tempo optymalizacji zbiegania do minimum funkcji kosztu w porównaniu do klasycznego algorytmu gradientu stochastycznego z momentem.
 
 ## Algorytm Dropout
 
