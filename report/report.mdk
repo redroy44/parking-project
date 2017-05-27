@@ -11,12 +11,21 @@ Locale        : polish
 name-contents  : Spis Treści
 name-references: Bibliografia
 name-figure    : Rysunek
+name-table     : Tabela
+name-abstract  : Streszczenie
+
 
 [TITLE]
+
+~ abstract
+Celem niniejszej pracy było wytrenowanie klasyfikatora miejsc parkingowych bazującego na analizie obrazu z kamery przemysłowej. Aby to osiągnąć zastosowano głębokie sieci neuronowe, które do tej pory pokazywały wysoką skuteczność w problemach analizy obrazu. Sieć neuronową zaimplementowano w języku Python, przy użyciu bibliotek Keras i Tensorflow, co umożliwiło trening sieci na GPU. Finalny model osiągnął skuteczność 99,75%, co w pełni pokazuje, moc głębokich sieci neuronowych w rozwiązywaniu problemu klasyfikacji.
+~
 
 ~ Begin SidePanel
 [TOC]
 ~ End SidePanel
+
+&pagebreak;
 
 ~ Begin MainPanel
 
@@ -193,6 +202,8 @@ Sieć neuronowa została zaimplementowana w języku programowania Python, który
 
 Zaimplementowana sieć neuronowa ma stosunkowo prostą architekturę.
 
+
+
 ## Wstępne przetwarzanie obrazu
 
 Zanim obrazy miejsc parkingowych zostały przesłane do sieci neuronowej, zostały one wstępnie przetworzone. Najpierw od wartości pikseli została odjęta średnia wartość ich jasności w każdym kanale (RGB). Proces ten nazywany jest centrowaniem.
@@ -211,20 +222,52 @@ zabieg ten powoduje znaczące powiększenie zbioru testowego co pozwala na lepsz
 
 # Wyniki
 
+Do przeprowadzenie treningu w możliwie szybkim czasie użyto maszyny z GPU Tesla K80 na serwerze Amazon Web Services. Dzięki temu trening trwał kilka razy szybciej niż na standardowej maszynie z CPU, jako jednostką obliczeniową. Sieć była trenowana przez 10 epok, a osiągnęła zbieżność już po pierwszej epoce. Finalnie osiągnęła ona skuteczność 99,75% na zbiorze testowym. Jest to zaskakująco dobry wynik biorąc pod uwagę niezbyt duży rozmiar sieci neuronowej. Rysunek [#fig-classified]. ilustruje przykładowe wyjście klasyfikatora.
+
 ~ Figure { #fig-classified; caption: "Zdjęcie z kamery z predykcjami z klasyfikatora." }
 ![classified]
 ~
 
+Widać, że wszystkie miejsca parkingowe zostały prawidłowo sklasyfikowane.
 
 [classified]: images/classified.png "classified" { width:auto; max-width:90% }
 
 ## Wpływ warunków pogodowych
 
-Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogodowe. Mogą one wpływać na oświetlenie samochodów rzucając cień lub powodując odbicia słoneczne, które utrudniają jednoznaczne sklasfikowanie danego obrazu jako wolne lub zajęte miejsce parkingowe. Żeby sprawdzić zdolność sieci do dostosowania się do zmiennych warunków pogodowych, wybrano 3 podzbiory dla różnych warunków pogodowych (słonecznie, deszczowo, zachmurzenie). Klasyfikator wybrano na kombinacji 2 zbiorów i przetestowano na zbiorze trzecim. Poniżej przedstawiono macierz skuteczności klasyfikatora.
+Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogodowe. Mogą one wpływać na oświetlenie samochodów rzucając cień lub powodując odbicia słoneczne, które utrudniają jednoznaczne sklasfikowanie danego obrazu jako wolne lub zajęte miejsce parkingowe. Żeby sprawdzić zdolność sieci do dostosowania się do zmiennych warunków pogodowych, wybrano 3 podzbiory dla różnych warunków pogodowych (słonecznie, deszczowo, zachmurzenie). Takie podzbiory podzielono na zbiór treningowy (70%) i walidacyjny (20%) i testowy (10%). Klasyfikator wybrano na kombinacji 2 zbiorów i przetestowano na zbiorze trzecim. Poniżej przedstawiono macierz skuteczności klasyfikatora.
+
+~ TableFigure { #tab-sample; caption: "Skuteczność klasyfikacji w zależności od warunków pogodowych. Klasyfikator wytrenowany na danym wierszu i przetestowany na danej kolumnie."; }
++:-{width:2cm}+:-{width:2cm}:+:-{width:2cm}:+:-{width:2cm}:+
+| Słońce |0.997   |0.994   |0.991   |
+|--------|--------|--------|--------|
+| Deszcz |0.946   |0.997   |0.949   |
+|--------|--------|--------|--------|
+| Chmury |0.941   |0.985   |0.919   |
+|--------|--------|--------|--------|
+|        | Słońce | Deszcz | Chmury |
+|--------|--------|--------|--------|
+~
+
+Pierwszą obserwacją jaka rzuca się w oczy jest obniżona skuteczność klasyfikatora przy testowaniu go w innych warunkach niż był wytrenowany. Sugeruje to, to że pełny klasyfikator dostosowuje się do różnych warunków pogodowych. Można też zauważych, że klasyfikator wytrenowany w słonecznych warunkach spisał się najlepiej.
 
 ## Uogólnienie sieci na inne parkingi
 
 Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. chcemy żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystaliśmy z 3 podzbiorów parkingów, UFPR04, UFPR05 i PUCPR. Dwa podzbiory zostały wykorzystane do treningu, trzeci podzbiów był zbiorem testowym. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
+
+~ TableFigure { #tab-sample; caption: "Skuteczność klasyfikacji w zależności od parkingu. Klasyfikator wytrenowany na danym wierszu i przetestowany na danej kolumnie."; }
++:-{width:2cm}+:-{width:2cm}:+:-{width:2cm}:+:-{width:2cm}:+
+| PUC    |0.995   |0.896   |0.853   |
+|--------|--------|--------|--------|
+| UFPR04 |0.926   |0.995   |0.914   |
+|--------|--------|--------|--------|
+| UFPR05 |0.931   |0.825   |0.933   |
+|--------|--------|--------|--------|
+|        | PUC    | UFPR04 | UFPR05 |
+|--------|--------|--------|--------|
+~
+
+
+
 
 # Wnioski
 
