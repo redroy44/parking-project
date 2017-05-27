@@ -197,9 +197,7 @@ Sieć neuronowa została zaimplementowana w języku programowania Python, który
 
 ## Wybrana architektura sieci neuronowej
 
-Zaimplementowana sieć neuronowa ma stosunkowo prostą architekturę.
-
-
+Zaimplementowana sieć neuronowa ma stosunkowo prostą architekturę. Składa się ona z bloku trzech warst splotowych oraz dwóch warstw pełnych. Daje to 94305 parametrów, które podlegały optymalizacji podczas treningu sieci.
 
 ## Wstępne przetwarzanie obrazu
 
@@ -263,9 +261,7 @@ Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólni
 |--------|--------|--------|--------|
 ~
 
-
-
-
+Zauważyć można, że sieć dobrze radzi sobie z uogólnieniem na różne parkingi, choć nie tak dobrze jak w przypadku różnych warunków pogodowych. Może to sugerować, że sieć jest bardziej czuła na zmiany perspektywy na samochody niż na warunki oświeteniowe.
 
 # Wnioski
 
