@@ -21,6 +21,8 @@ name-abstract  : Streszczenie
 Celem niniejszej pracy było wytrenowanie klasyfikatora miejsc parkingowych bazującego na analizie obrazu z kamery przemysłowej. Aby to osiągnąć zastosowano głębokie sieci neuronowe, które do tej pory pokazywały wysoką skuteczność w problemach analizy obrazu. Sieć neuronową zaimplementowano w języku Python, przy użyciu bibliotek Keras i Tensorflow, co umożliwiło trening sieci na GPU. Finalny model osiągnął skuteczność 99,75%, co w pełni pokazuje, moc głębokich sieci neuronowych w rozwiązywaniu problemu klasyfikacji.
 ~
 
+&pagebreak;
+
 ~ Begin SidePanel
 [TOC]
 ~ End SidePanel
@@ -175,7 +177,7 @@ Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami p
 Ważnym udogodnieniem w zbiorze danych jest dostarczenie wraz z całymi zdjęciami z kamery, już wyekstrahowanych fragmentów miejsc parkingowych, które mogą być przesłana bezpośrednio po sieci (po zmianie rozmiaru, tak by wszystkie próbki miały ten sam rozmiar). Przykładowe próbki prezentuje rysunek [#fig-lot].
 
 ~ Figure { #fig-lot; caption: "Przykładowe próbki prezentujące wolne i zajęte miejsca parkingowe." }
-![lot]
+![lots]
   ~
 
 Zbiór danych jest bardzo dobrze zrównoważony tzn. próbek wolnych miejsc jest mniej więcej tyle samo co próbek miejsc zajętych, co pozwoliło na uniknięcie problemów płynących z posiadania niezbalansowanych klas.
@@ -188,7 +190,7 @@ Przed przeprowadzenie procesu treningu zbiór danych został podzielony na trzy 
 
 W sumie zbiór ma 695851 próbek miejsc parkingowych. Warto zaznaczyć, że zbiór został podzielony wg dni, a nie pojedynczych zdjęć. Jest to ważne, żeby uniknąć sytuacji w której próbki tego samego samochodu z dwóch zdjęć trafiają do różnych zbiorów. 
 
-[lot]: images/snapshot_lot.png "lot" { width:auto; max-width:90% }
+[lots]: images/lots.jpg "lots" { width:auto; max-width:90% }
 
 # Implementacja
 
@@ -269,9 +271,10 @@ Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólni
 
 
 
+
 # Wnioski
 
-Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc parkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,5\%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
+Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc parkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,75\%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
 
 [BIB]
 
