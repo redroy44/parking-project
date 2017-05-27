@@ -55,30 +55,26 @@ W kolejnej części pracy autor opisze pokrótce splotowe sieci neuronowe, któr
 
 Dotychczasowe próby rozwiązania problemu klasyfikacji miejsc parkingowych oparte były na klasycznych algorytmach używanych w analizie obrazów. Bazowały one na budowanych ręcznie cechach, które opisywały dany obraz.
 
-Rewolucją, którą przyniósł rok 2012 było zastosowanie splotowych sieci neuronowych do rozpoznawania obrazów. Okazały się one bardzo skuteczne w tego typu problemach, co jeszcze lepiej pokazuje Rysunek [#fig-ilsvrc]. Prezentuje on metrykę Top-5 błędu klasyfikacji dla zbioru ImageNet, w ktorym należy poprawnie sklasyfikować obraz należący do jednej z 1000 klas. Znaczące obniżenie błędu klasyfikacji można zaobserwować w roku 2012 kiedy splotowe sieci neuronowe zostały wykorzystane do rozwiązania tego problemu pierwszy raz [@AlexNet]. W kolejnych latach wynik ten jeszcze się poprawiał, a w 2015 roku przekroczył wynik osiągnięty przez człowieka.
+Rewolucją, którą przyniósł rok 2012 było zastosowanie splotowych sieci neuronowych do rozpoznawania obrazów. Okazały się one bardzo skuteczne w tego typu problemach, co jeszcze lepiej pokazuje Rysunek [#fig-ilsvrc]. Prezentuje on metrykę Top-5 błędu klasyfikacji dla zbioru ImageNet, w którym należało poprawnie sklasyfikować obraz należący do jednej z 1000 klas. Znaczące obniżenie błędu klasyfikacji można zaobserwować w roku 2012 kiedy splotowe sieci neuronowe zostały wykorzystane do rozwiązania tego problemu pierwszy raz [@AlexNet]. W kolejnych latach wynik ten jeszcze się poprawiał, a w 2015 roku przekroczył wynik osiągnięty przez człowieka.
 
 ~ Figure { #fig-ilsvrc; caption: "Top-5 błędu klasyfikacji zbioru ImageNet." }
 ![ilsvrc]
 ~
 
-Dlatego też w niniejszej pracy autor zdecydował się wykorzystać splotowe sieci neuronowe, które mają ogromny potencjał w problemie rozpoznawania obrazów.
-
 [ilsvrc]: images/ilsvrc.png "ilsvrc" { width:auto; max-width:90% }
 
 ## Splotowe Sieci Neuronowe
 
-Architektura splotowych sieci neuronowych w ogólnym ujęcie przypomina budowę tradycyjnych pełnych sieci neuronowych. Tak jak one, składają się z warstw, a ich celem jest znalezienie minimum funkcji kosztu.  Różnicą jest tutaj założenie, że na wejsciu sieci podawany jest obraz. To założenie pozwala na zastosowanie pewnych rozwiązań które pozwalają na szybszą optymalizację, co z kolei pozwala na zastosowania głębszych sieci bez ryzyka ich przetrenowania.
+Architektura splotowych sieci neuronowych w ogólnym ujęciu przypomina budowę tradycyjnych pełnych sieci neuronowych. Tak jak one, składają się z warstw, a ich celem jest znalezienie minimum funkcji kosztu za pomocą algorytmu propagacji wstecznej.  Różnicą jest tutaj założenie, że na wejsciu sieci podawany jest obraz. To założenie pozwala na zastosowanie pewnych rozwiązań które pozwalają na szybszą optymalizację, co z kolei pozwala na zastosowania głębszych sieci bez ryzyka ich przetrenowania.
 
-Podstawowym elementem splotowej sieci neuronowej jest warstwa splotowa, warstwa agregująca oraz warstwa pełna. Pierwsza warstwa, jak nazwa wskazuje wykorzystuje funkcję splotu do obliczenia cech opisujących fragment obrazu. Jest ona lokalnie połączone w przeciwieństwie do warstw z tradycyjnych sieci.
-Zestaw filtrów jest splatany z fragmentami obrazu, czego wynikiem jest mapa aktywacji, która określa które fragmenty obrazu najbardziej pasują do filtrów. Intuicyjnie filtry w drodze optymalizacji sieci uczą się optymalnie reprezentować cechy obrazu, które będą wykorzystywane do klasyfikacji.
-
-
+Podstawowym elementem splotowejwybranej sieci neuronowej są: warstwa splotowa, warstwa agregująca oraz warstwa pełna. Pierwsza warstwa, jak nazwa wskazuje wykorzystuje funkcję splotu do obliczenia cech opisujących fragment obrazu. Jest ona lokalnie połączone w przeciwieństwie do warstw z tradycyjnych sieci.
+Zestaw filtrów jest splatany z fragmentami obrazu, czego wynikiem jest mapa aktywacji, która znajduje fragmenty obrazu najbardziej pasujące do filtrów. Intuicyjnie filtry w drodze optymalizacji sieci uczą się optymalnie reprezentować cechy obrazu, które będą wykorzystywane do klasyfikacji.
 
 Warstwa agregująca (max-pooling) wykorzystywana jest przede wszystkim do redukcji liczby parametrów przez wybranie wartości maksymalnej na określonym obszarze obrazu. 
 
-W wyższych warstwach sieci wykorzystuje się znane w pełni połączone warstwy, kóre są wykorzystywane do redukcji liczby parametrów i finalnej optymalizacji/obliczenie wartości funkcji kosztu.
+W wyższych warstwach sieci wykorzystuje się znane, w pełni połączone warstwy, które są wykorzystywane do redukcji liczby parametrów i finalnej optymalizacji wartości funkcji kosztu.
 
-Jedną z bardziej charakterystycznych architektur splotowej sieci neuronowej jest kilkukrotnie powtórzona sekwencja warstw splotowej i agregującej, która jest połączona z kilkoma warstwami pełnymi.
+Jedną z bardziej charakterystycznych architektur splotowej sieci neuronowej jest kilkukrotnie powtórzona sekwencja warstw splotowej i agregującej, która jest połączona z kilkoma warstwami pełnymi i klasyfikatorem.
 
 ## Funkcja aktywacji
 
@@ -88,7 +84,7 @@ Wybraną funkcją aktywacji sieci jest funkcja ReLU, czyli funkcja liniowa ogran
 f(x) = \max(0, x)
 ~
 
-Funkcja aktywacji jest jedną z najczęściej stosowanych funkcji ze względu na bardzo prosto określoną pochodną:
+Funkcja ta jest jedną z najczęściej stosowanych funkcji ze względu na bardzo łatwo określoną pochodną:
 
 ~ Math { #eq-relu; caption:"Wzór pochodnej funkcji ReLU" }
 f'(x) = 
@@ -98,17 +94,13 @@ f'(x) =
 \end{cases}
 ~
 
-Negatywną cechą tej funkcji aktywacji jest natomiast zjawisko zanikających gradientów. Zjawisku temu można jednak w dużym stopniu zapobiec uważnie wybierając wartości początkowe parametrów sieci neuronowej.
+Negatywną cechą tej funkcji ReLU jest natomiast zjawisko zanikających gradientów. Zjawisku temu można jednak w dużym stopniu zapobiec uważnie wybierając wartości początkowe parametrów sieci neuronowej.
 
 ## Klasyfikator i funkcja kosztu
 
 Wybranym klasyfikatorem odpowiedzialnym za predykcję klas w sieci neuronowej jest klasyfikator softmax, który stosuje entropię wzajemną jako funkcję kosztu.
 
-~ Math { #eq-relu; caption:"Wzór na funkcję kosztu." }
-  2+2=4
-~
-Klasyfikator softmax stosuje się najczęściej w przypadku klasyfikacji wielorakiej, ponieważ softmax zwraca wektor ocen dla poszczególnych klas. Ciekawą właściwością jest jego interpretacja probabilistyczna. Ponieważ wartości wektora ocen zwracanego przez klasyfikator sumiją się do 1, można interpretować jako prawdopodobieństwa, że dana próbka należy do danej klasy.
-Co z kolei ułatwia zaobserwowanie jak bardzo pewny siebie jest klasyfikator podczas predykcji klas.
+Klasyfikator ten stosuje się najczęściej w przypadku klasyfikacji wielorakiej, ponieważ softmax zwraca wektor ocen dla poszczególnych klas. Ciekawą właściwością jest jego interpretacja probabilistyczna. Ponieważ wartości wektora ocen zwracanego przez klasyfikator sumują się do 1, można interpretować je jako prawdopodobieństwo, że dana próbka należy do danej klasy, co z kolei ułatwia zaobserwowanie jak bardzo pewny jest klasyfikator podczas predykcji klas.
 
 W przypadku klasyfikacji binarnej, zwracany będzie dwuwymiarowy wektor o wartościach $[ p \quad 1-p ]$, gdzie $p$ określa prawdopodobieństwo, przynależności do pierwszej klasy. W przypadku kiedy $p \approx 0,5$ można ocenić że klasyfikator nie jest pewny, do której klasy należy dana próbka lub że klasyfikator jest źle wytrenowany.
 
@@ -118,8 +110,8 @@ Wybranym algorytmem optymalizacji parametrów sieci jest algorytm Adam [@Adam]. 
 
 ## Algorytm Dropout
 
-Algorytm Dropout [@Dropout] jest wysoce efektywnym algorytmem zapobiegającym przetrenowaniu sieci.
-Jego zasadą działania jest aktywacja neuronów z pewnym prawdopodobieństwem $p$.
+Algorytm Dropout [@Dropout] jest bardzo skutecznym algorytmem zapobiegającym przetrenowaniu sieci.
+Jego zasadą działania jest aktywacja neuronów z pewnym prawdopodobieństwem $p$. Dzięki temu sieć musi się dostosować do treningu mając do dyspozycji mniejszą liczbę neuronów.
 
 ~ Figure { #fig-dropout; caption: "Porównanie standardowej sieci oraz sieci z zastosowaniem algorytmu dropout." }
 ![dropout]
@@ -132,7 +124,7 @@ Warto dodać, że podczas predykcji prawdopodobieństwo ustala się na wartość
 
 # Opis zbioru danych
 
-Wybranym zbiorem danych jest zbiór PKLot [@PKLot] przygotowany przez Uniwersytet Federalny w Paranie w Brazylii . Zbiór ten zawiera 12417 zdjęć parkingu Uniwersytecie w Paranie (UFPR) oraz parkingu Katolickiego Uniwersytetu w Paranie (PUCPR). Zdjęcia zostały zebrane w różnych warunkach pogodowych (słonecznie, zachmurzenie, deszcz) na przestrzeni 30 dni; zdjęcia były robione co 5 minut.
+Wybranym zbiorem danych jest zbiór PKLot [@PKLot] przygotowany przez Uniwersytet Federalny w Paranie w Brazylii . Zbiór ten zawiera 12417 zdjęć parkingu Uniwersytecie w Paranie (UFPR) oraz parkingu Katolickiego Uniwersytetu w Paranie (PUCPR). Zdjęcia zostały zebrane w różnych warunkach pogodowych (słońce, chmury, deszcz) na przestrzeni 30 dni; zdjęcia były robione co 5 minut.
 Rysunek [#fig-snapshot]. pokazuje przykładowe zdjęcie z kamery.
 
 ~ Figure { #fig-snapshot; caption: "Zdjęcie z kamery, parking PUCPR." }
@@ -168,7 +160,7 @@ Do każdego zdjęcie został dołączony plik xml z metadanymi opisującymi aktu
 ![snapshot_lot]
 ~
 
-Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami poszczególnych miejsc parkingowych. Można zauważyć, że niektóre z nich się nakładają, co więcej, kształt samochodu zależny jest od perspektywy obrazu z kamery. Sieć neuronowa musiała się dostosować do tego faktu.
+Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami poszczególnych miejsc parkingowych. Można zauważyć, że niektóre z nich się nakładają, co więcej, kształt samochodu zależny jest od perspektywy obrazu z kamery.
 
 [snapshot]: images/snapshot.png "snapshot" { width:auto; max-width:90% }
 
@@ -177,19 +169,19 @@ Na rysunku [#fig-snapshot_lot]. widać obraz parkingu z nałożonymi granicami p
 
 ## Podział zbioru danych
 
-Ważnym udogodnieniem w zbiorze danych jest dostarczenie wraz z całymi zdjęciami z kamery, już wyekstrahowanych fragmentów miejsc parkingowych, które mogą być przesłana bezpośrednio po sieci (po zmianie rozmiaru, tak by wszystkie próbki miały ten sam rozmiar). Przykładowe próbki prezentuje rysunek [#fig-lot].
+Ważnym udogodnieniem w zbiorze danych jest dostarczenie wraz z całymi zdjęciami z kamery, już wyekstrahowanych fragmentów miejsc parkingowych, które mogą być przesłane bezpośrednio do sieci (po zmianie rozmiaru, tak by wszystkie próbki miały ten sam rozmiar). Przykładowe próbki prezentuje rysunek [#fig-lot].
 
 ~ Figure { #fig-lot; caption: "Przykładowe próbki prezentujące wolne i zajęte miejsca parkingowe." }
 ![lots]
   ~
 
-Zbiór danych jest bardzo dobrze zrównoważony tzn. próbek wolnych miejsc jest mniej więcej tyle samo co próbek miejsc zajętych, co pozwoliło na uniknięcie problemów płynących z posiadania niezbalansowanych klas.
+Zbiór danych jest bardzo dobrze zrównoważony tzn. próbek wolnych miejsc jest mniej więcej tyle samo co próbek miejsc zajętych, co pozwoliło na uniknięcie problemów płynących z niezbalansowania klas.
 
-Przed przeprowadzenie procesu treningu zbiór danych został podzielony na trzy części:
+Przed przeprowadzeniem procesu treningu zbiór danych został podzielony na trzy części:
 
-* zbiór treningowy - 50% próbek - 325298 próbek
-* zbiór walidacyjny - 30% próbek - 219720 próbek
-* zbiór testowy - 20% próbek - 150833 próbek
+* zbiór treningowy - 50% - 325298 próbek
+* zbiór walidacyjny - 30% - 219720 próbek
+* zbiór testowy - 20% - 150833 próbek
 
 W sumie zbiór ma 695851 próbek miejsc parkingowych. Warto zaznaczyć, że zbiór został podzielony wg dni, a nie pojedynczych zdjęć. Jest to ważne, żeby uniknąć sytuacji w której próbki tego samego samochodu z dwóch zdjęć trafiają do różnych zbiorów. 
 
@@ -227,7 +219,7 @@ zabieg ten powoduje znaczące powiększenie zbioru testowego co pozwala na lepsz
 
 # Wyniki
 
-Do przeprowadzenie treningu w możliwie szybkim czasie użyto maszyny z GPU Tesla K80 na serwerze Amazon Web Services. Dzięki temu trening trwał kilka razy szybciej niż na standardowej maszynie z CPU, jako jednostką obliczeniową. Sieć była trenowana przez 10 epok, a osiągnęła zbieżność już po pierwszej epoce. Finalnie osiągnęła ona skuteczność 99,75% na zbiorze testowym. Jest to zaskakująco dobry wynik biorąc pod uwagę niezbyt duży rozmiar sieci neuronowej. Rysunek [#fig-classified]. ilustruje przykładowe wyjście klasyfikatora.
+Do przeprowadzenie treningu w możliwie szybkim czasie użyto maszyny z GPU NVidia Tesla K80 na serwerze Amazon Web Services. Dzięki temu trening trwał kilka razy szybciej niż na standardowej maszynie z CPU jako jednostką obliczeniową. Sieć była trenowana przez 10 epok, a osiągnęła zbieżność już po pierwszej. Finalnie osiągnęła ona skuteczność 99,75% na zbiorze testowym. Jest to zaskakująco dobry wynik biorąc pod uwagę niezbyt duży rozmiar sieci neuronowej. Rysunek [#fig-classified]. ilustruje przykładowe wyjście klasyfikatora.
 
 ~ Figure { #fig-classified; caption: "Zdjęcie z kamery z predykcjami z klasyfikatora." }
 ![classified]
@@ -239,7 +231,7 @@ Widać, że wszystkie miejsca parkingowe zostały prawidłowo sklasyfikowane.
 
 ## Wpływ warunków pogodowych
 
-Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogodowe. Mogą one wpływać na oświetlenie samochodów rzucając cień lub powodując odbicia słoneczne, które utrudniają jednoznaczne sklasfikowanie danego obrazu jako wolne lub zajęte miejsce parkingowe. Żeby sprawdzić zdolność sieci do dostosowania się do zmiennych warunków pogodowych, wybrano 3 podzbiory dla różnych warunków pogodowych (słonecznie, deszczowo, zachmurzenie). Takie podzbiory podzielono na zbiór treningowy (70%) i walidacyjny (20%) i testowy (10%). Klasyfikator wybrano na kombinacji 2 zbiorów i przetestowano na zbiorze trzecim. Poniżej przedstawiono macierz skuteczności klasyfikatora.
+Ważnym wymaganiem wobec klasyfikatora była odporność na różne warunki pogodowe. Mogą one wpływać na oświetlenie samochodów rzucając cień lub powodując odbicia słoneczne, które utrudniają jednoznaczne sklasfikowanie danego obrazu jako wolne lub zajęte miejsce parkingowe. Żeby sprawdzić zdolność sieci do dostosowania się do zmiennych warunków pogodowych, wybrano 3 podzbiory dla różnych warunków pogodowych (słonecznie, deszczowo, zachmurzenie). Takie podzbiory podzielono na zbiór treningowy (70%) i walidacyjny (20%) i testowy (10%). Klasyfikator wytrenowano na jednym podzbiorze i przetestowano na dwóch pozostałych. Poniżej przedstawiono macierz skuteczności klasyfikatora.
 
 ~ TableFigure { #tab-sample; caption: "Skuteczność klasyfikacji w zależności od warunków pogodowych. Klasyfikator wytrenowany na danym wierszu i przetestowany na danej kolumnie."; }
 +:-{width:2cm}+:-{width:2cm}:+:-{width:2cm}:+:-{width:2cm}:+
@@ -257,7 +249,7 @@ Pierwszą obserwacją jaka rzuca się w oczy jest obniżona skuteczność klasyf
 
 ## Uogólnienie sieci na inne parkingi
 
-Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. chcemy żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystaliśmy z 3 podzbiorów parkingów, UFPR04, UFPR05 i PUCPR. Dwa podzbiory zostały wykorzystane do treningu, trzeci podzbiów był zbiorem testowym. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
+Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólnienia na inne parkingi. Jest to szczególnie ważne przy samym użyciu sieci w komercyjnych produktach, tzn. oczekuję się żeby sieć dobrze działała na nowym parkingu przy zastosowaniu innych kamer oraz z ujęciami z innej perspektywy na parking. Do zbadania klasyfikatora pod tym kątem skorzystano z 3 podzbiorów parkingów, UFPR04, UFPR05 i PUCPR. Jeden podzbiór został wykorzystany do treningu, dwa pozostałe wykorzystano do testów. Poniżej zamieszczono maciesz skuteczności dla użytych podzbiorów.
 
 ~ TableFigure { #tab-sample; caption: "Skuteczność klasyfikacji w zależności od parkingu. Klasyfikator wytrenowany na danym wierszu i przetestowany na danej kolumnie."; }
 +:-{width:2cm}+:-{width:2cm}:+:-{width:2cm}:+:-{width:2cm}:+
@@ -277,7 +269,7 @@ Kolejnym eksperymentem było sprawdzenie zdolności sieci neuronowej do uogólni
 
 # Wnioski
 
-Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc parkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,75\%$ klasyfikator jest gotowy do zbudowania jego produkcyjnej wersji. Co więcej, zauważyć można, że sieć neuronowa małych rozmiarów, 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
+Zastosowanie splotowej sieci neuronowej do rozwiązania problemu klasyfikacji miejsc parkingowych okazało się trafnym wyborem. Przy skuteczności rzędu $99,75\%$ klasyfikator jest gotowy do fazy produktyzacji. Co więcej, zauważyć można, że już sieć neuronowa małych rozmiarów, mająca 3 warstwy splotowe, jest w stanie dostosować się do zmiennych warunków pogodowych i oświetleniowych. Niniejsza praca zaprezentowała jedynie próbkę możliwości jakie niesie zastosowanie głębokich sieci neuronowych w uczeniu maszynowym. Pewnym jest, że będą one coraz częściej wykorzystywane na rynkach komercyjnych oraz przy rozwiązywaniu codziennych problemów.
 
 [BIB]
 
